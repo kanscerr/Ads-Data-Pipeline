@@ -1,0 +1,17 @@
+version: '3'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181 #port zookeeper listens on
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0 #same version as zookeeper for compatibility
+    depends_on: 
+      - zookeeper #zookeeper starts first then kafka
+    ports:
+      - "9092:9092" #host:container (to expose kafka inside docker to my machine)
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181 #to tell kafka to connect to zookeeper on 2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092 #the host inside docker where kafka is listening to
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
