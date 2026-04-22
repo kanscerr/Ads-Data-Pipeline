@@ -13,3 +13,7 @@ __pycache__/
 
 # Env variables (if you add later)
 .env
+
+output/
+
+test_db.py
